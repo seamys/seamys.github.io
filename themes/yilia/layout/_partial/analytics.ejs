@@ -1,12 +1,12 @@
 <% if (theme.analytics){ %>
-<script type='text/javascript'>
+<script>
+var _hmt = _hmt || [];
 (function() {
-    var c = document.createElement('script'); 
-    c.type = 'text/javascript';
-    c.async = true;
-    c.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'www.clicki.cn/boot/<%= theme.analytics %>';
-    var h = document.getElementsByTagName('script')[0];
-    h.parentNode.insertBefore(c, h);
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?<%= theme.analytics %>";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
 })();
 </script>
+
 <% } %>

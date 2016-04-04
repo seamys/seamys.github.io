@@ -31,11 +31,11 @@ animate: true
 open_in_new: false
 
 # Miscellaneous
-analytics: '52422'
+analytics: '7f67ff6e64583afd8819dfc773870787'
 favicon: /favicon.ico
 
 #你的头像url
-avatar: "https://avatars2.githubusercontent.com/u/7090368?v=3&s=460"
+avatar: "/static/image/avatars.jpg"
 #是否开启分享
 share_jia: true
 share_addthis: false
