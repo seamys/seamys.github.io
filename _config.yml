@@ -62,9 +62,12 @@ time_format: HH:mm:ss
 per_page: 10
 pagination_dir: page
 
-
 deploy:
-  type: qiniu
+- type: git
+  repo: git@github.com:seamys/seamys.github.io.git
+  branch: master
+
+- type: qiniu
   bucket: frllk
   access_key: EPvnPZSwtWmQYpU5p149PVTZFeFs0ruZiD57wSK8
   secret_key: sKa7v5bEcCOaRorOk98rSYrThOdvbRrXb7BShXcP
