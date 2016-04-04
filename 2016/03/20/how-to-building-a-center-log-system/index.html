@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Elasticsearch,kibana 搭建日志集中分析系统 | 酷米田frllk思考，浮想！</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.前言日志收集分析非常重要，而且日志到达一定数量后分析无法进行。本篇文章讲解如何使用 Elasticsearch+kibana 在 Ubuntu系统下快速搭建一个日志分析系统。
+Elasticsearch:Elasticsearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch,kibana 搭建日志集中分析系统">
+<meta property="og:url" content="http://www.frllk.com/2016/03/20/how-to-building-a-center-log-system/index.html">
+<meta property="og:site_name" content="酷米田frllk思考，浮想！">
+<meta property="og:description" content="1.前言日志收集分析非常重要，而且日志到达一定数量后分析无法进行。本篇文章讲解如何使用 Elasticsearch+kibana 在 Ubuntu系统下快速搭建一个日志分析系统。
+Elasticsearch:Elasticsearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为A">
+<meta property="og:updated_time" content="2016-04-04T07:30:34.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch,kibana 搭建日志集中分析系统">
+<meta name="twitter:description" content="1.前言日志收集分析非常重要，而且日志到达一定数量后分析无法进行。本篇文章讲解如何使用 Elasticsearch+kibana 在 Ubuntu系统下快速搭建一个日志分析系统。
+Elasticsearch:Elasticsearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为A">
+  
+    <link rel="alternative" href="/atom.xml" title="酷米田frllk思考，浮想！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/static/image/avatars.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">海叔</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/categories/book">阅读计划</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/seamys" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/u/1661084192" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/ku-mi-tian-frllk" title="zhihu">zhihu</a>
+					        
+								<a class="mail" target="_blank" href="/yiim@foxmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Book/" style="font-size: 20px;">Book</a> <a href="/tags/C/" style="font-size: 15px;">C#</a> <a href="/tags/CsQuery/" style="font-size: 15px;">CsQuery</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Google镜像/" style="font-size: 10px;">Google镜像</a> <a href="/tags/IIS/" style="font-size: 10px;">IIS</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SwaggerUI/" style="font-size: 10px;">SwaggerUI</a> <a href="/tags/Swashbuckle/" style="font-size: 10px;">Swashbuckle</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/jQuery插件/" style="font-size: 10px;">jQuery插件</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/log4net/" style="font-size: 10px;">log4net</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/哈利波特/" style="font-size: 10px;">哈利波特</a> <a href="/tags/搜索引擎/" style="font-size: 10px;">搜索引擎</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">海叔</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/static/image/avatars.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">海叔</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/categories/book">阅读计划</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/seamys" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/1661084192" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/ku-mi-tian-frllk" title="zhihu">zhihu</a>
+			        
+						<a class="mail" target="_blank" href="/yiim@foxmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-how-to-building-a-center-log-system" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/20/how-to-building-a-center-log-system/" class="article-date">
+  	<time datetime="2016-03-19T16:51:14.000Z" itemprop="datePublished">2016-03-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Elasticsearch,kibana 搭建日志集中分析系统
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kibana/">kibana</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/log4net/">log4net</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/后端开发/">后端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>日志收集分析非常重要，而且日志到达一定数量后分析无法进行。本篇文章讲解如何使用 Elasticsearch+kibana 在 Ubuntu系统下快速搭建一个日志分析系统。</p>
+<p><strong><a href="http://baike.baidu.com/view/8005387.htm" target="_blank" rel="external">Elasticsearch</a></strong>:<br>Elasticsearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。</p>
+<p><strong>Kibana</strong><br>Kibana是一个使用 Apache 开源协议，基于浏览器的 Elasticsearch 分析和搜索仪表板。Kibana 非常容易安装和使用。整个项目都是用 HTML 和 Javascript 写的，所以 Kibana 不需要任何服务器端组件，一个纯文本发布服务器就够了。Kibana 和Elasticsearch 一样，力争成为极易上手，但同样灵活而强大的软件。</p>
+<h2 id="2-安装-Java-8-Elasticsearch-全文检索系统"><a href="#2-安装-Java-8-Elasticsearch-全文检索系统" class="headerlink" title="2.安装 Java 8,Elasticsearch 全文检索系统"></a>2.安装 Java 8,Elasticsearch 全文检索系统</h2><p>你可以在此查看 <a href="https://gist.github.com/seamys/c08a6ccc7c34cb19cf05" target="_blank" rel="external">ElasticSearch.sh</a> 自动安装脚本。当前脚本会安装网站最新版本 <strong>elasticsearch-2.2.1</strong></p>
+<h3 id="下载自动安装脚本"><a href="#下载自动安装脚本" class="headerlink" title="下载自动安装脚本"></a>下载自动安装脚本</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~ &amp;&amp; wget https://gist.githubusercontent.com/seamys/c08a6ccc7c34cb19cf05/raw/f12379cf54438630decf776089f76fb62aff9282/ElasticSearch.sh</span><br></pre></td></tr></table></figure>
+<h3 id="为脚本添加执行权限"><a href="#为脚本添加执行权限" class="headerlink" title="为脚本添加执行权限"></a>为脚本添加执行权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+r ./ElasticSearch.sh</span><br></pre></td></tr></table></figure>
+<h3 id="执行当前安装脚本"><a href="#执行当前安装脚本" class="headerlink" title="执行当前安装脚本"></a>执行当前安装脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./ElasticSearch.sh</span><br></pre></td></tr></table></figure>
+<h3 id="绑定IP"><a href="#绑定IP" class="headerlink" title="绑定IP"></a>绑定IP</h3><p>如果上述脚本安装成功。我们紧接着修改elasticsearch http访问地址 </p>
+<h2 id="5-WebAPI与log4net，log4net-Elasticsearch-扩展"><a href="#5-WebAPI与log4net，log4net-Elasticsearch-扩展" class="headerlink" title="5.WebAPI与log4net，log4net.Elasticsearch 扩展"></a>5.WebAPI与log4net，log4net.Elasticsearch 扩展</h2><h2 id="6-完成"><a href="#6-完成" class="headerlink" title="6.完成"></a>6.完成</h2><p>参考链接：<br><a href="https://www.elastic.co/products/kibana" target="_blank" rel="external">Kibana User Guide 4.3</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html" target="_blank" rel="external">Elasticsearch Reference</a><br><a href="https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-elk-stack-on-ubuntu-14-04" target="_blank" rel="external">how-to-install-elasticsearch-logstash-and-kibana-elk-stack-on-ubuntu-14-04</a><br><a href="http://jptoto.github.io/log4net.ElasticSearch/" target="_blank" rel="external">log4net.ElasticSearch</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/21/thinking-clearly/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          [已读]《清醒思考的艺术》
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/17/cs-query/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CsQuery .Net下的jQuery实现</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="how-to-building-a-center-log-system" data-title="Elasticsearch,kibana 搭建日志集中分析系统" data-url="http://www.frllk.com/2016/03/20/how-to-building-a-center-log-system/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"frllk"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 海叔
+		<span>京ICP备14015188号</span>
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7f67ff6e64583afd8819dfc773870787";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

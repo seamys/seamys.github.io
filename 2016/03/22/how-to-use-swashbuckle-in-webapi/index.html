@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>如何使 WebAPI 自动生成漂亮又实用在线API文档 | 酷米田frllk思考，浮想！</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.前言1.1 SwaggerUISwaggerUI 是一个简单的Restful API 测试和文档工具。简单、漂亮、易用（官方demo）。通过读取JSON 配置显示API. 项目本身仅仅也只依赖一些 html,css.js静态文件. 你可以几乎放在任何Web容器上使用。
+1.2 SwashbuckleSwashbuckle 是.NET类库,可以将WebAPI所有开放的控制器方法生成对应Swagg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使 WebAPI 自动生成漂亮又实用在线API文档">
+<meta property="og:url" content="http://www.frllk.com/2016/03/22/how-to-use-swashbuckle-in-webapi/index.html">
+<meta property="og:site_name" content="酷米田frllk思考，浮想！">
+<meta property="og:description" content="1.前言1.1 SwaggerUISwaggerUI 是一个简单的Restful API 测试和文档工具。简单、漂亮、易用（官方demo）。通过读取JSON 配置显示API. 项目本身仅仅也只依赖一些 html,css.js静态文件. 你可以几乎放在任何Web容器上使用。
+1.2 SwashbuckleSwashbuckle 是.NET类库,可以将WebAPI所有开放的控制器方法生成对应Swagg">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154604761-736833879.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154638386-80214618.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154705886-1132698503.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154731698-1275900571.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155022245-428689097.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155040511-1048217314.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155111604-218029648.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155134136-1251422400.png">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155150651-1690324017.png">
+<meta property="og:updated_time" content="2016-04-04T07:30:34.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使 WebAPI 自动生成漂亮又实用在线API文档">
+<meta name="twitter:description" content="1.前言1.1 SwaggerUISwaggerUI 是一个简单的Restful API 测试和文档工具。简单、漂亮、易用（官方demo）。通过读取JSON 配置显示API. 项目本身仅仅也只依赖一些 html,css.js静态文件. 你可以几乎放在任何Web容器上使用。
+1.2 SwashbuckleSwashbuckle 是.NET类库,可以将WebAPI所有开放的控制器方法生成对应Swagg">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154604761-736833879.png">
+  
+    <link rel="alternative" href="/atom.xml" title="酷米田frllk思考，浮想！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/static/image/avatars.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">海叔</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/categories/book">阅读计划</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/seamys" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/u/1661084192" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/ku-mi-tian-frllk" title="zhihu">zhihu</a>
+					        
+								<a class="mail" target="_blank" href="/yiim@foxmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Book/" style="font-size: 20px;">Book</a> <a href="/tags/C/" style="font-size: 15px;">C#</a> <a href="/tags/CsQuery/" style="font-size: 15px;">CsQuery</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Google镜像/" style="font-size: 10px;">Google镜像</a> <a href="/tags/IIS/" style="font-size: 10px;">IIS</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SwaggerUI/" style="font-size: 10px;">SwaggerUI</a> <a href="/tags/Swashbuckle/" style="font-size: 10px;">Swashbuckle</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/jQuery插件/" style="font-size: 10px;">jQuery插件</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/log4net/" style="font-size: 10px;">log4net</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/哈利波特/" style="font-size: 10px;">哈利波特</a> <a href="/tags/搜索引擎/" style="font-size: 10px;">搜索引擎</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">海叔</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/static/image/avatars.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">海叔</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/categories/book">阅读计划</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/seamys" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/1661084192" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/ku-mi-tian-frllk" title="zhihu">zhihu</a>
+			        
+						<a class="mail" target="_blank" href="/yiim@foxmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-how-to-use-swashbuckle-in-webapi" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/22/how-to-use-swashbuckle-in-webapi/" class="article-date">
+  	<time datetime="2016-03-22T05:35:12.000Z" itemprop="datePublished">2016-03-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何使 WebAPI 自动生成漂亮又实用在线API文档
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CsQuery/">CsQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SwaggerUI/">SwaggerUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Swashbuckle/">Swashbuckle</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/后端开发与技术/">后端开发与技术</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><h3 id="1-1-SwaggerUI"><a href="#1-1-SwaggerUI" class="headerlink" title="1.1 SwaggerUI"></a>1.1 <a href="http://swagger.io/swagger-ui/" target="_blank" rel="external">SwaggerUI</a></h3><p><a href="http://swagger.io/swagger-ui/" target="_blank" rel="external">SwaggerUI</a> 是一个简单的Restful API 测试和文档工具。简单、漂亮、易用（<a href="http://petstore.swagger.io/" target="_blank" rel="external">官方demo</a>）。通过读取JSON 配置显示API. 项目本身仅仅也只依赖一些 html,css.js静态文件. 你可以几乎放在任何Web容器上使用。</p>
+<h3 id="1-2-Swashbuckle"><a href="#1-2-Swashbuckle" class="headerlink" title="1.2 Swashbuckle"></a>1.2 <a href="https://github.com/domaindrivendev/Swashbuckle" target="_blank" rel="external">Swashbuckle</a></h3><p><a href="https://github.com/domaindrivendev/Swashbuckle" target="_blank" rel="external">Swashbuckle</a> 是.NET类库,可以将WebAPI所有开放的控制器方法生成对应<a href="http://swagger.io/swagger-ui/" target="_blank" rel="external">SwaggerUI</a>的JSON配置。再通过<a href="http://swagger.io/swagger-ui/" target="_blank" rel="external">SwaggerUI</a> 显示出来。类库中已经包含<a href="http://swagger.io/swagger-ui/" target="_blank" rel="external">SwaggerUI</a> 。所以不需要额外安装。</p>
+<h2 id="2-快速开始"><a href="#2-快速开始" class="headerlink" title="2.快速开始"></a>2.快速开始</h2><ul>
+<li><p>创建项目 <strong>OnlineAPI</strong>来封装<strong>百度音乐服务</strong>(<a href="http://files.cnblogs.com/files/Arrays/OnlineAPI.rar" target="_blank" rel="external">示例下载</a>) ，通过API可以搜索、获取音乐的信息和播放连接。</p>
+<p>我尽量删除一些我们demo中不会用到的一些文件，使其看上去比较简洁。</p>
+</li>
+</ul>
+<p><img width="800" alt="Swashbuckle配置文件" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154604761-736833879.png"></p>
+<ul>
+<li><p>WebAPI 安装 <a href="https://github.com/domaindrivendev/Swashbuckle" target="_blank" rel="external">Swashbuckle</a></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Package Swashbuckle</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码注释生成文档说明。<br><a href="https://github.com/domaindrivendev/Swashbuckle" target="_blank" rel="external">Swashbuckle</a> 是通过生成的XML文件来读取注释的，生成 <a href="http://swagger.io/swagger-ui/" target="_blank" rel="external">SwaggerUI</a>，JSON 配置中的说明的。<br>安装时会在项目目录 App_Start 文件夹下生成一个 SwaggerConfig.cs 配置文件，用于配置 <a href="http://swagger.io/swagger-ui/" target="_blank" rel="external">SwaggerUI</a> 相关展示行为的。如图：</p>
+</li>
+</ul>
+<p><img width="800" alt="Swashbuckle配置文件" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154638386-80214618.png"></p>
+<ul>
+<li>将配置文件大概99行注释去掉并修改为</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.IncludeXmlComments(GetXmlCommentsPath(thisAssembly.GetName().Name));</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>并在当前类中添加一个方法</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="name"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">GetXmlCommentsPath</span>(<span class="params"><span class="keyword">string</span> name</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">string</span>.Format(<span class="string">@"&#123;0&#125;\bin\&#123;1&#125;.XML"</span>, AppDomain.CurrentDomain.BaseDirectory, name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>紧接着你在此Web项目属性生成选卡中勾选 “XML 文档文件”，编译过程中生成类库的注释文件</p>
+</li>
+</ul>
+<p><img width="800" alt="生成XML" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154705886-1132698503.png"></p>
+<ul>
+<li>添加百度音乐 3个API</li>
+</ul>
+<p><img width="800" alt="WebAPI" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322154731698-1275900571.png"></p>
+<ul>
+<li>访问 <code>http://&lt;youhost&gt;/swagger/ui/index</code>,最终显示效果</li>
+</ul>
+<p><img width="800" alt="WebAPI" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155022245-428689097.png"></p>
+<ul>
+<li>我们通过API 测试API 是否成功运行</li>
+</ul>
+<p><img width="800" alt="WebAPI" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155040511-1048217314.png"></p>
+<h2 id="3-添加自定义HTTP-Header"><a href="#3-添加自定义HTTP-Header" class="headerlink" title="3.添加自定义HTTP Header"></a>3.添加自定义HTTP Header</h2><p>在开发移动端 API时常常需要验证权限，验证参数放在Http请求头中是再好不过了。WebAPI配合过滤器验证权限即可</p>
+<p>首先我们需要创建一个 IOperationFilter 接口的类。IOperationFilter</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Web;</span><br><span class="line"><span class="keyword">using</span> System.Web.Http;</span><br><span class="line"><span class="keyword">using</span> System.Web.Http.Description;</span><br><span class="line"><span class="keyword">using</span> System.Web.Http.Filters;</span><br><span class="line"><span class="keyword">using</span> Swashbuckle.Swagger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">OnlineAPI.Utility</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HttpHeaderFilter</span> : <span class="title">IOperationFilter</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Apply</span>(<span class="params">Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (operation.parameters == <span class="keyword">null</span>) operation.parameters = <span class="keyword">new</span> List&lt;Parameter&gt;();</span><br><span class="line">            <span class="keyword">var</span> filterPipeline = apiDescription.ActionDescriptor.GetFilterPipeline();</span><br><span class="line">            <span class="comment">//判断是否添加权限过滤器</span></span><br><span class="line">            <span class="keyword">var</span> isAuthorized = filterPipeline.Select(filterInfo =&gt; filterInfo.Instance).Any(filter =&gt; filter <span class="keyword">is</span> IAuthorizationFilter);</span><br><span class="line">            <span class="comment">//判断是否允许匿名方法</span></span><br><span class="line">            <span class="keyword">var</span> allowAnonymous = apiDescription.ActionDescriptor.GetCustomAttributes&lt;AllowAnonymousAttribute&gt;().Any();</span><br><span class="line">            <span class="keyword">if</span> (isAuthorized &amp;&amp; !allowAnonymous)</span><br><span class="line">            &#123;</span><br><span class="line">                operation.parameters.Add(<span class="keyword">new</span> Parameter</span><br><span class="line">                &#123;</span><br><span class="line">                    name = <span class="string">"access-key"</span>,</span><br><span class="line">                    @<span class="keyword">in</span> = <span class="string">"header"</span>,</span><br><span class="line">                    description = <span class="string">"用户访问Key"</span>,</span><br><span class="line">                    required = <span class="keyword">false</span>,</span><br><span class="line">                    type = <span class="string">"string"</span></span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 SwaggerConfig.cs 的 EnableSwagger 配置匿名方法类添加一行注册代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.OperationFilter&lt;HttpHeaderFilter&gt;();</span><br></pre></td></tr></table></figure>
+<p>添加Web权限过滤器</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Net;</span><br><span class="line"><span class="keyword">using</span> System.Net.Http;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> System.Web;</span><br><span class="line"><span class="keyword">using</span> System.Web.Http;</span><br><span class="line"><span class="keyword">using</span> System.Web.Http.Controllers;</span><br><span class="line"><span class="keyword">using</span> Newtonsoft.Json;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">OnlineAPI.Utility</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> </span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AccessKeyAttribute</span> : <span class="title">AuthorizeAttribute</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 权限验证</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="actionContext"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span><span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">bool</span> <span class="title">IsAuthorized</span>(<span class="params">HttpActionContext actionContext</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> request = actionContext.Request;</span><br><span class="line">            <span class="keyword">if</span> (request.Headers.Contains(<span class="string">"access-key"</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">var</span> accessKey = request.Headers.GetValues(<span class="string">"access-key"</span>).SingleOrDefault();</span><br><span class="line">                <span class="comment">//TODO 验证Key</span></span><br><span class="line">                <span class="keyword">return</span> accessKey == <span class="string">"123456789"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span>     处理未授权的请求</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="actionContext"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">HandleUnauthorizedRequest</span>(<span class="params">HttpActionContext actionContext</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> content = JsonConvert.SerializeObject(<span class="keyword">new</span> &#123;State = HttpStatusCode.Unauthorized&#125;);</span><br><span class="line">            actionContext.Response = <span class="keyword">new</span> HttpResponseMessage</span><br><span class="line">            &#123;</span><br><span class="line">                Content = <span class="keyword">new</span> StringContent(content, Encoding.UTF8, <span class="string">"application/json"</span>),</span><br><span class="line">                StatusCode = HttpStatusCode.Unauthorized</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在你想要的ApiController 或者是 Action 添加过滤器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[AccessKey]</span><br></pre></td></tr></table></figure>
+<p>最终显示效果</p>
+<p><img width="800" alt="WebAPI" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155111604-218029648.png"></p>
+<h2 id="4-显示上传文件参数"><a href="#4-显示上传文件参数" class="headerlink" title="4.显示上传文件参数"></a>4.显示上传文件参数</h2><p>SwaggerUI 有上传文件的功能和添加自定义HTTP Header 做法类似，只是我们通过特殊的设置来标示API具有上传文件的功能</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Web;</span><br><span class="line"><span class="keyword">using</span> System.Web.Http.Description;</span><br><span class="line"><span class="keyword">using</span> Swashbuckle.Swagger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">OnlineAPI.Utility</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> </span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UploadFilter</span> : <span class="title">IOperationFilter</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span>     文件上传</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="operation"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="schemaRegistry"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name="apiDescription"&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Apply</span>(<span class="params">Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrWhiteSpace(operation.summary) &amp;&amp; operation.summary.Contains(<span class="string">"upload"</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                operation.consumes.Add(<span class="string">"application/form-data"</span>);</span><br><span class="line">                operation.parameters.Add(<span class="keyword">new</span> Parameter</span><br><span class="line">                &#123;</span><br><span class="line">                    name = <span class="string">"file"</span>,</span><br><span class="line">                    @<span class="keyword">in</span> = <span class="string">"formData"</span>,</span><br><span class="line">                    required = <span class="keyword">true</span>,</span><br><span class="line">                    type = <span class="string">"file"</span></span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 SwaggerConfig.cs 的 EnableSwagger 配置匿名方法类添加一行注册代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.OperationFilter&lt;UploadFilter&gt;();</span><br></pre></td></tr></table></figure>
+<p><img width="800" alt="WebAPI" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155134136-1251422400.png"></p>
+<p>API 文档展示效果</p>
+<p><img width="800" alt="WebAPI" src="http://images2015.cnblogs.com/blog/329473/201603/329473-20160322155150651-1690324017.png"></p>
+<h2 id="5-版本和资源"><a href="#5-版本和资源" class="headerlink" title="5.版本和资源"></a>5.版本和资源</h2><p>你可以通过下列连接获取相关说明。<br>OnlineAPI Demo<br><a href="http://files.cnblogs.com/files/Arrays/OnlineAPI.rar" target="_blank" rel="external">http://files.cnblogs.com/files/Arrays/OnlineAPI.rar</a><br>Swashbuckle 项目地址：<br><a href="https://github.com/domaindrivendev/Swashbuckle" target="_blank" rel="external">https://github.com/domaindrivendev/Swashbuckle</a><br>swagger-ui  项目地址：<br><a href="https://github.com/swagger-api/swagger-ui" target="_blank" rel="external">https://github.com/swagger-api/swagger-ui</a><br>swagger-ui 官网地址：<br><a href="http://swagger.io/swagger-ui/" target="_blank" rel="external">http://swagger.io/swagger-ui/</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/04/04/github-in-action/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          [已读]《GitHub入门与实践》
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/03/21/thinking-clearly/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">[已读]《清醒思考的艺术》</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="how-to-use-swashbuckle-in-webapi" data-title="如何使 WebAPI 自动生成漂亮又实用在线API文档" data-url="http://www.frllk.com/2016/03/22/how-to-use-swashbuckle-in-webapi/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"frllk"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 海叔
+		<span>京ICP备14015188号</span>
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7f67ff6e64583afd8819dfc773870787";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

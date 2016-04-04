@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>JQuery 无限级下拉选择插件 | 酷米田frllk思考，浮想！</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="插件主要应对无限级树型结构的数据。比如说国家、省、市、区、县级市、村、街道的选择，还有一些B2B之类的网站无限极分类。无论本地数据还是异步获取这些在后端系统对内容进行归类是常常用到。jQuery.category.js 就是为了解决此问题的。
+
+快速开始下载压缩版本 或者 开发版本.
+依赖文件1234&amp;lt;!--引入jquery 1.7 以上的版本--&amp;gt;&amp;lt;script src=&quot;jq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JQuery 无限级下拉选择插件">
+<meta property="og:url" content="http://www.frllk.com/2016/03/16/linkageselect-plugin-for-category-choose/index.html">
+<meta property="og:site_name" content="酷米田frllk思考，浮想！">
+<meta property="og:description" content="插件主要应对无限级树型结构的数据。比如说国家、省、市、区、县级市、村、街道的选择，还有一些B2B之类的网站无限极分类。无论本地数据还是异步获取这些在后端系统对内容进行归类是常常用到。jQuery.category.js 就是为了解决此问题的。
+
+快速开始下载压缩版本 或者 开发版本.
+依赖文件1234&amp;lt;!--引入jquery 1.7 以上的版本--&amp;gt;&amp;lt;script src=&quot;jq">
+<meta property="og:image" content="https://raw.githubusercontent.com/seamys/category/master/example/image/3.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/seamys/category/master/example/image/1.gif">
+<meta property="og:image" content="http://seamys.github.io/category/example/">
+<meta property="og:updated_time" content="2016-04-04T07:30:34.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JQuery 无限级下拉选择插件">
+<meta name="twitter:description" content="插件主要应对无限级树型结构的数据。比如说国家、省、市、区、县级市、村、街道的选择，还有一些B2B之类的网站无限极分类。无论本地数据还是异步获取这些在后端系统对内容进行归类是常常用到。jQuery.category.js 就是为了解决此问题的。
+
+快速开始下载压缩版本 或者 开发版本.
+依赖文件1234&amp;lt;!--引入jquery 1.7 以上的版本--&amp;gt;&amp;lt;script src=&quot;jq">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/seamys/category/master/example/image/3.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="酷米田frllk思考，浮想！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/static/image/avatars.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">海叔</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/categories/book">阅读计划</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/seamys" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/u/1661084192" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/ku-mi-tian-frllk" title="zhihu">zhihu</a>
+					        
+								<a class="mail" target="_blank" href="/yiim@foxmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Book/" style="font-size: 20px;">Book</a> <a href="/tags/C/" style="font-size: 15px;">C#</a> <a href="/tags/CsQuery/" style="font-size: 15px;">CsQuery</a> <a href="/tags/Elasticsearch/" style="font-size: 10px;">Elasticsearch</a> <a href="/tags/Google镜像/" style="font-size: 10px;">Google镜像</a> <a href="/tags/IIS/" style="font-size: 10px;">IIS</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SwaggerUI/" style="font-size: 10px;">SwaggerUI</a> <a href="/tags/Swashbuckle/" style="font-size: 10px;">Swashbuckle</a> <a href="/tags/html/" style="font-size: 10px;">html</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/jQuery插件/" style="font-size: 10px;">jQuery插件</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/log4net/" style="font-size: 10px;">log4net</a> <a href="/tags/select/" style="font-size: 10px;">select</a> <a href="/tags/哈利波特/" style="font-size: 10px;">哈利波特</a> <a href="/tags/搜索引擎/" style="font-size: 10px;">搜索引擎</a> <a href="/tags/电影/" style="font-size: 10px;">电影</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">海叔</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/static/image/avatars.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">海叔</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/categories/book">阅读计划</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/seamys" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/1661084192" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/ku-mi-tian-frllk" title="zhihu">zhihu</a>
+			        
+						<a class="mail" target="_blank" href="/yiim@foxmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-linkageselect-plugin-for-category-choose" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/16/linkageselect-plugin-for-category-choose/" class="article-date">
+  	<time datetime="2016-03-16T15:06:05.000Z" itemprop="datePublished">2016-03-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JQuery 无限级下拉选择插件
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery插件/">jQuery插件</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/select/">select</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>插件主要应对无限级树型结构的数据。比如说国家、省、市、区、县级市、村、街道的选择，还有一些B2B之类的网站无限极分类。无论本地数据还是异步获取这些在后端系统对内容进行归类是常常用到。<code>jQuery.category.js</code> 就是为了解决此问题的。</p>
+<p><img src="https://raw.githubusercontent.com/seamys/category/master/example/image/3.gif" alt="image"></p>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p>下载<a href="https://raw.githubusercontent.com/seamys/category/master/dist/jquery.category.min.js" target="_blank" rel="external">压缩版本</a> 或者 <a href="https://raw.githubusercontent.com/seamys/category/master/dist/jquery.category.js" target="_blank" rel="external">开发版本</a>.</p>
+<h3 id="依赖文件"><a href="#依赖文件" class="headerlink" title="依赖文件"></a>依赖文件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--引入jquery 1.7 以上的版本--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--引入插件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"jquery.category.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-数据脚本格式"><a href="#2-数据脚本格式" class="headerlink" title="2. 数据脚本格式"></a>2. 数据脚本格式</h3><p>我们简单使用一些数据来填充使用（并非一定需要使用当前格式后面详细介绍使用）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var data = &#123;</span><br><span class="line">     id_0: [&#123; Id: 1, Name: &apos;服装&apos; &#125;, &#123; Id: 2, Name: &apos;鞋包&apos; &#125;],</span><br><span class="line">     id_1: [&#123; Id: 3, Name: &apos;男装&apos; &#125;, &#123; Id: 4, Name: &apos;女装&apos; &#125;],</span><br><span class="line">     id_2: [&#123; Id: 5, Name: &apos;男鞋&apos; &#125;, &#123; Id: 6, Name: &apos;女鞋&apos; &#125;, &#123; Id: 7, Name: &apos;箱包&apos; &#125;],</span><br><span class="line">     id_3: [&#123; Id: 8, Name: &apos;男式上装&apos; &#125;, &#123; Id: 9, Name: &apos;男式裤子&apos; &#125;],</span><br><span class="line">     id_4: [&#123; Id: 7, Name: &apos;女式裙子&apos; &#125;, &#123; Id: 8, Name: &apos;女式裤子&apos; &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据格式，<code>id_0</code> 节点是所有节点的根分类。根分类下有 <code>服装</code>、<code>鞋包</code>。服装的 <code>Id</code>为 1 则服装的子分类<code>key</code>为 id_1，服装下有 <code>男装</code>、<code>女装</code>。以此类推。</p>
+<h3 id="3-调用插件"><a href="#3-调用插件" class="headerlink" title="3. 调用插件"></a>3. 调用插件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 用一个div 存储结果--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"show"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"category"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span><br><span class="line">    $(".category").category(&#123;</span><br><span class="line">        //select 值修改后触发此回调方法 </span><br><span class="line">        change: function (v) &#123;</span><br><span class="line">           $("#show").text(v.join());</span><br><span class="line">         &#125;,</span><br><span class="line">         //数据提供回调方法</span><br><span class="line">         provider: function (params, url, callback) &#123;</span><br><span class="line">             var id = params[params.length - 1];</span><br><span class="line">             callback(data["id_" + id]);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;);</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看demo"><a href="#查看demo" class="headerlink" title="查看demo"></a>查看demo</h3><p><a href="http://seamys.github.io/category/example/getting-started.html" target="_blank" rel="external">点击查看 DEMO</a></p>
+<p><img src="https://raw.githubusercontent.com/seamys/category/master/example/image/1.gif" alt="image"></p>
+<h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><p><em><code>url(string)</code></em> : 在异步工作下，插件通过此URL获取相应分类子分类</p>
+<p><em><code>handel(function)</code></em> : 创建select内option时将调用此方法,当您无法控制服务器或者数据源格式的时可以重写此方法。</p>
+<p><em><code>path(string)</code></em> : 在页面初始化时,指定此参数可以初始化选中的select值。例如：<code>0,2,38,65</code>,</p>
+<p><em><code>sChar(string)</code></em> : 用于指定拆分 path的字符。 默认 “<code>,</code>“</p>
+<p><em><code>create(function)</code></em> : 创建 <code>select</code> 时调用，回调方法必须返回一个jQuery select 对象。</p>
+<p><em><code>filter(function)</code></em> : 方法在 provider方法执行后调用，负责对数据进行二次过滤。</p>
+<p><em><code>param(function)</code></em> : 如果你无法控制服务器提供的参数名称时可以调用此方法重写服务器参数。</p>
+<p><em><code>provider(function)</code></em>: 数据提供者，您可以通过此方法来重写数据提供的方式。</p>
+<h3 id="默认参数如下"><a href="#默认参数如下" class="headerlink" title="默认参数如下"></a>默认参数如下</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">          url: &quot;/category/list&quot;,</span><br><span class="line">          handel: function (v) &#123;</span><br><span class="line">              return &quot;&lt;option value=&quot; + v.Id + &quot;&gt;&quot; + v.Name + &quot;&lt;/option&gt;&quot;;</span><br><span class="line">          &#125;,</span><br><span class="line">          path: 0,</span><br><span class="line">          sChar: &apos;,&apos;,</span><br><span class="line">          change: function (arrays) &#123; return arrays; &#125;,</span><br><span class="line">          create: function () &#123;</span><br><span class="line">              return $(&quot;&lt;select&gt;&quot;);</span><br><span class="line">          &#125;,</span><br><span class="line">          filter: function (arrays) &#123;</span><br><span class="line">              return arrays;</span><br><span class="line">          &#125;,</span><br><span class="line">          param: function (arrays) &#123;</span><br><span class="line">              return &#123; ids: arrays.join(defaults.sChar) &#125;;</span><br><span class="line">          &#125;,</span><br><span class="line">          provider: function (arrays, callback) &#123;</span><br><span class="line">              $.ajax(defaults.url, &#123;</span><br><span class="line">                  type: &apos;GET&apos;,</span><br><span class="line">                  dataType: &quot;json&quot;,</span><br><span class="line">                  cache: true,</span><br><span class="line">                  data: defaults.param(arrays || [0]),</span><br><span class="line">                  success: callback</span><br><span class="line">              &#125;);</span><br><span class="line">          &#125;,</span><br><span class="line">          defOption: &apos;请选择..&apos;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="开发文档"><a href="#开发文档" class="headerlink" title="开发文档"></a>开发文档</h2><h2 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h2><p><img src="http://seamys.github.io/category/example/" alt="Examples"></p>
+<h2 id="Release-History"><a href="#Release-History" class="headerlink" title="Release History"></a>Release History</h2><p>2016年1月30日 0.1.0 Release</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/03/17/cs-query/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          CsQuery .Net下的jQuery实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/08/10/some-prejudices-harry-potter-movie/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">哈利波特电影的一些偏见</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="linkageselect-plugin-for-category-choose" data-title="JQuery 无限级下拉选择插件" data-url="http://www.frllk.com/2016/03/16/linkageselect-plugin-for-category-choose/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"frllk"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 海叔
+		<span>京ICP备14015188号</span>
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?7f67ff6e64583afd8819dfc773870787";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
