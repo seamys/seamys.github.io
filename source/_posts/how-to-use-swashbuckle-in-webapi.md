@@ -60,7 +60,7 @@ protected static string GetXmlCommentsPath(string name)
 
 <img width="800" alt="WebAPI" src="https://images2015.cnblogs.com/blog/329473/201603/329473-20160322154731698-1275900571.png">
 
-- 访问 `http://<youhost>/swagger/ui/index`,最终显示效果
+- 访问 `https://<youhost>/swagger/ui/index`,最终显示效果
 
 <img width="800" alt="WebAPI" src="https://images2015.cnblogs.com/blog/329473/201603/329473-20160322155022245-428689097.png">
 
