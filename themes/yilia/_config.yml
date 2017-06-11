@@ -7,7 +7,7 @@ menu:
 # SubNav
 subnav:
   github: "https://github.com/seamys"
-  weibo: "http://weibo.com/u/1661084192"
+  weibo: "https://weibo.com/u/1661084192"
   #rss: "#"
   zhihu: "https://www.zhihu.com/people/ku-mi-tian-frllk"
   #douban: "#"
@@ -37,11 +37,10 @@ favicon: /favicon.ico
 #你的头像url
 avatar: "/static/image/avatars.jpg"
 #是否开启分享
-share_jia: true
+share_jia: false
 share_addthis: false
-#是否开启多说评论，填写你在多说申请的项目名称 duoshuo: duoshuo-key
 #若使用disqus，请在博客config文件中填写disqus_shortname，并关闭多说评论
-duoshuo: frllk
+
 #是否开启云标签
 tagcloud: true
 

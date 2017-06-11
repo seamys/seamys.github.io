@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.2.0"
+    "version": "3.3.7"
+  },
+  "scripts": {
+    "start": "hexo server -p 80",
+    "deploy":"npm run generate && hexo deploy qiniu",
+    "generate":"hexo generate"
   },
   "dependencies": {
     "hexo": "^3.2.0",

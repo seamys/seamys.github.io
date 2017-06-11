@@ -11,23 +11,27 @@ tags:
 - select
 ---
 
+# levelSelector
 
-插件主要应对无限级树型结构的数据。比如说国家、省、市、区、县级市、村、街道的选择，还有一些B2B之类的网站无限极分类。无论本地数据还是异步获取这些在后端系统对内容进行归类是常常用到。`jQuery.category.js` 就是为了解决此问题的。
+https://seamys.github.io/levelSelector/example/used-in-complex-data-formats.html
 
-![image](https://raw.githubusercontent.com/seamys/category/master/example/image/3.gif)
+插件主要应对无限级树型结构的数据。比如说国家、省、市、区、县级市、村、街道的选择，还有一些B2B之类的网站无限极分类。
+无论本地数据还是异步获取这些在后端系统对内容进行归类是常常用到。`jQuery.levelSelector.js` 就是为了解决此问题的。
+
+![](https://images2015.cnblogs.com/blog/329473/201603/329473-20160324114449058-1763367235.gif)
 
 ## 快速开始
 下载[压缩版本][min] 或者 [开发版本][max].
 
-[min]: https://raw.githubusercontent.com/seamys/category/master/dist/jquery.category.min.js
-[max]: https://raw.githubusercontent.com/seamys/category/master/dist/jquery.category.js
+[min]: /dist/jquery.levelSelector.min.js
+[max]: /dist/jquery.levelSelector.js
 
-### 依赖文件
+### 1. 依赖文件
 ``` html
 <!--引入jquery 1.7 以上的版本-->
 <script src="jquery.js"></script>
 <!--引入插件-->
-<script src="jquery.category.js"></script>
+<script src="jquery.levelSelector.js"></script>
 ```
 ### 2. 数据脚本格式
 
@@ -42,35 +46,36 @@ var data = {
      id_4: [{ Id: 7, Name: '女式裙子' }, { Id: 8, Name: '女式裤子' }]
 }
 ```
-
 数据格式，`id_0` 节点是所有节点的根分类。根分类下有 `服装`、`鞋包`。服装的 `Id`为 1 则服装的子分类`key`为 id_1，服装下有 `男装`、`女装`。以此类推。
 ### 3. 调用插件
-
 ``` html
 <!-- 用一个div 存储结果-->
 <div id="show"></div>
-<div class="category"></div>
+<div class="levelSelector"></div>
 <script type="text/javascript">
-    $(".category").category({
-        //select 值修改后触发此回调方法 
+    $(".levelSelector").levelSelector({
+        //select 中任意值修改后触发此回调方法 
         change: function (v) {
            $("#show").text(v.join());
          },
          //数据提供回调方法
-         provider: function (params, url, callback) {
+         provider: function (params, callback) {
              var id = params[params.length - 1];
              callback(data["id_" + id]);
          }
      });
 </script>
 ```
+### 4. 查看demo
 
-### 查看demo
+[点击查看 DEMO](https://seamys.github.io/levelSelector/example/getting-started.html)
 
-[点击查看 DEMO](http://seamys.github.io/category/example/getting-started.html)
+![image](https://images2015.cnblogs.com/blog/329473/201603/329473-20160324114331042-385521810.gif)
 
-![image](https://raw.githubusercontent.com/seamys/category/master/example/image/1.gif)
-
+## 使用 bower 安装
+``` sh
+ bower install levelSelector
+```
 ## 参数说明
 
 
@@ -91,10 +96,9 @@ var data = {
 *`provider(function)`*: 数据提供者，您可以通过此方法来重写数据提供的方式。
 
 ### 默认参数如下
-
 ``` javascipt
 		{
-            url: "/category/list",
+            url: "/levelSelector/list",
             handel: function (v) {
                 return "<option value=" + v.Id + ">" + v.Name + "</option>";
             },
@@ -122,13 +126,12 @@ var data = {
             defOption: '请选择..'
         }
 ```
-
 ## 开发文档
 
 
 ## Examples
 
-![Examples](http://seamys.github.io/category/example/)
+https://seamys.github.io/levelSelector/example/
 
 ## Release History
 

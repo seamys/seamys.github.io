@@ -2,6 +2,7 @@
 layout: post
 title: "哈利波特电影的一些偏见"
 date: 2014-08-10 23:06:05
+comments: true
 categories: 
 - 生活娱乐 
 tags: 
