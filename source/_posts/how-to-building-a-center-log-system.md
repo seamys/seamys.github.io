@@ -2,7 +2,7 @@
 
 title: Elasticsearch,kibana 搭建日志集中分析系统
 date: 2016-03-20 00:51:14
-
+comments: true
 categories: 
 - 后端开发
 tags:

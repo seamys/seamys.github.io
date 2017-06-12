@@ -2,6 +2,7 @@
 layout: post
 title: "[已读]《清醒思考的艺术》"
 date: 2016-3-21 18:18:10
+comments: true
 categories: 
 - book
 tags: 

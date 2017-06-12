@@ -2,6 +2,7 @@
 layout: post
 title: Google镜像站点
 date: 2014-04-05 23:06:05
+comments: true
 categories: 
 - 资源搜集
 tags: 

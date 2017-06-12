@@ -2,6 +2,7 @@
 layout: post
 title: "[已读]《构建高性能WEB站点》"
 date: 2013-04-21 18:18:10
+comments: true
 categories: 
 - book
 tags: 

@@ -2,6 +2,7 @@
 layout: post
 title: "[已读]《ASP.NET MVC实战》"
 date: 2013-01-21 18:18:10
+comments: true
 categories: 
 - book
 tags: 

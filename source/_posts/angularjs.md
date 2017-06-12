@@ -2,6 +2,7 @@
 layout: post
 title: "[已读]《用AngularJS开发下一代Web应用》"
 date: 2015-03-10 18:18:10
+comments: true
 categories: 
 - book
 tags: 

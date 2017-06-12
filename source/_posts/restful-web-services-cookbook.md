@@ -2,6 +2,7 @@
 layout: post
 title: "[已读]《RESTful Web Services Cookbook》"
 date: 2015-08-21 18:18:10
+comments: true
 categories: 
 - book
 tags: 
