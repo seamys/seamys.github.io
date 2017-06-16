@@ -1,6 +1,6 @@
 ﻿---
 layout: post
-title: "[在读]《创业时, 我们在知乎聊什么?》"
+title: "[已读]《创业时, 我们在知乎聊什么?》"
 date: 2016-4-4 01:20:49
 comments: true
 categories: 
