@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[重读]《Git版本控制管理（第2版）》"
+title: "[已读]《Git版本控制管理（第2版）》"
 date: 2017-09-16 14:18:10
 comments: false
 categories: 
