@@ -35,7 +35,7 @@ analytics: '7f67ff6e64583afd8819dfc773870787'
 favicon: /favicon.ico
 
 #你的头像url
-avatar: "/static/image/avatars.jpg"
+avatar: "/static/image/avatars2.png"
 #是否开启分享
 share_jia: false
 share_addthis: false
