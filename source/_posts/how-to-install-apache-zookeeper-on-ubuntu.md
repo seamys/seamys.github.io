@@ -112,7 +112,7 @@ sudo tar -xvf apache-zookeeper-3.6.2-bin.tar.gz
 #### 6. 重命名文件夹的名称为 zookeeper
 
 ```bash
-sudo mv apache-zookeeper-3.6.1-bin zookeeper
+sudo mv apache-zookeeper-3.6.2-bin zookeeper
 ```
 
 #### 7. 指定zookeeper 为此目录的拥有着
